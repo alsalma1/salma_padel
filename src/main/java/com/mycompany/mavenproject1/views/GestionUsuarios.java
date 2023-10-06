@@ -2,14 +2,22 @@ package com.mycompany.mavenproject1.views;
 
 import com.mycompany.mavenproject1.controllers.AppController;
 import com.mycompany.mavenproject1.models.Usuario;
+import java.awt.Cursor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 public class GestionUsuarios extends javax.swing.JFrame {
-    
+    private AppController appController;
+
+    public void setAppController(AppController appController) {
+        this.appController = appController;
+    }
 
     public GestionUsuarios() {
         initComponents();
@@ -25,7 +33,8 @@ public class GestionUsuarios extends javax.swing.JFrame {
         labelUsuarios = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableUsuarios = new javax.swing.JTable();
-        btnAñadirUsuario = new javax.swing.JButton();
+        returnIcon = new javax.swing.JLabel();
+        addIcon = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,10 +62,17 @@ public class GestionUsuarios extends javax.swing.JFrame {
             tableUsuarios.getColumnModel().getColumn(0).setResizable(false);
         }
 
-        btnAñadirUsuario.setText("Añadir");
-        btnAñadirUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAñadirUsuarioActionPerformed(evt);
+        returnIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Desktop\\salma_padel-main\\src\\main\\java\\com\\mycompany\\mavenproject1\\views\\pics\\returnIcon.png")); // NOI18N
+        returnIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                returnIconMouseEntered(evt);
+            }
+        });
+
+        addIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Desktop\\salma_padel-main\\src\\main\\java\\com\\mycompany\\mavenproject1\\views\\pics\\plusIcon.png")); // NOI18N
+        addIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                addIconMouseEntered(evt);
             }
         });
 
@@ -69,31 +85,58 @@ public class GestionUsuarios extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 985, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(33, 806, Short.MAX_VALUE)
-                .addComponent(btnAñadirUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(197, 197, 197))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(addIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(returnIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(334, 334, 334))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(btnAñadirUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(returnIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                    .addComponent(addIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAñadirUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirUsuarioActionPerformed
+    private void returnIconMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_returnIconMouseEntered
         // TODO add your handling code here:
-        AppController appController = new AppController();
-        appController.mostrarVentanaAñadirUsuario();
-    }//GEN-LAST:event_btnAñadirUsuarioActionPerformed
+        this.returnIcon.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        returnIcon.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int num = 1;
+                // Lógica para manejar el evento de clic en el icono
+                setVisible(false);
+                AppController appController = new AppController();
+                appController.volverAtras(num);
+            }
+        });
+    }//GEN-LAST:event_returnIconMouseEntered
+
+    private void addIconMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addIconMouseEntered
+        // TODO add your handling code here:
+        this.addIcon.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        addIcon.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                setVisible(false);
+                AppController appController = new AppController();
+                appController.mostrarVentanaAñadirUsuario(GestionUsuarios.this);
+            }
+        });
+    }//GEN-LAST:event_addIconMouseEntered
+
 
     public void cargarUsuariosEnTabla(List<Usuario> usuarios) {
         DefaultTableModel model = (DefaultTableModel) tableUsuarios.getModel();
@@ -126,9 +169,10 @@ public class GestionUsuarios extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAñadirUsuario;
+    private javax.swing.JLabel addIcon;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JLabel labelUsuarios;
+    private javax.swing.JLabel returnIcon;
     public javax.swing.JTable tableUsuarios;
     // End of variables declaration//GEN-END:variables
 }

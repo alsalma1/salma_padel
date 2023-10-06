@@ -12,8 +12,8 @@ public class Mavenproject1 {
         
         //Mostar el login del administrador
         AppController appController = new AppController();
-        //appController.mostrarLogin();
-        appController.mostrarUsuarios();
+        appController.mostrarLogin();
+        //appController.mostrarUsuarios();
         
     }
 }

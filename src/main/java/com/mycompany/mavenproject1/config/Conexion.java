@@ -20,7 +20,7 @@ public class Conexion {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             conectar = DriverManager.getConnection(cadena, usuario, contrasenia);
-            System.out.println("MESSAGE: Se conectó correctamente a la base de datos");
+            //System.out.println("MESSAGE: Se conectó correctamente a la base de datos");
 
         } catch(Exception e) {
             System.out.println("ERROR: No se conectó a la base de datos, error: "+e.toString());

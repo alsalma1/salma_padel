@@ -5,6 +5,7 @@ import com.mycompany.mavenproject1.models.Usuario;
 import com.mycompany.mavenproject1.views.AñadirUsuario;
 import com.mycompany.mavenproject1.views.GestionUsuarios;
 import com.mycompany.mavenproject1.views.Login;
+import com.mycompany.mavenproject1.views.Login;
 import com.mycompany.mavenproject1.views.PaginaPrincipalAdmin;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,13 +14,15 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 public class AppController {
     
-    public static Login login = new Login();
     public static PaginaPrincipalAdmin paginaPrincipalAdmin = new PaginaPrincipalAdmin();
     public static AñadirUsuario añadirUsuario = new AñadirUsuario();
+    public static GestionUsuarios gestionUsuarios = new GestionUsuarios();
     
     private String datos = "";
 
@@ -29,24 +32,35 @@ public class AppController {
         loginView.setVisible(true);
     }
     
-    public void comprobarCredenciales(String usuario, String contrasena){
- 
-        // Llama al método comprobarDatos en Admin
+    public void comprobarCredenciales(String usuario, String contrasena, Login login){
         Admin admin = new Admin(usuario, contrasena);
         if(admin.comprobarDatos()){
             // Las credenciales son válidas, abre la página principal del administrador
-            login.setVisible(false);
-            login.dispose();
-            
             paginaPrincipalAdmin.setVisible(true);
+            login.setVisible(false);
         }
         else{
             JOptionPane.showMessageDialog(null, "Datos incorerctos, intenta otra vez!");
         }
     }
+    
+    public void volverAtras(int num){
+        if(num == 0){
+            Usuario usuario = new Usuario();
+
+            // Llamar al método obtenerUsuarios
+            List<Usuario> usuarios = usuario.obtenerUsuarios();
+            GestionUsuarios gestionUsuarios = new GestionUsuarios();
+            gestionUsuarios.cargarUsuariosEnTabla(usuarios);
+            gestionUsuarios.setVisible(true);
+        }
+        else if(num == 1){
+            paginaPrincipalAdmin.setVisible(true);
+        }
+        
+    }
     /* ------------------ Usuario --------------------- */
-    public void mostrarUsuarios(){
-        // Crear una instancia de Usuario
+    public void mostrarUsuarios(PaginaPrincipalAdmin paginaPrincipalAdmin){
         Usuario usuario = new Usuario();
 
         // Llamar al método obtenerUsuarios
@@ -56,7 +70,8 @@ public class AppController {
 
         // Mostrar la ventana de GestionUsuarios
         gestionUsuarios.setVisible(true);
-        
+        paginaPrincipalAdmin.setVisible(false);
+
         /*if (!usuarios.isEmpty()) {
             System.out.println("Registros de usuarios:");
             GestionUsuarios gestionUsuarios = new GestionUsuarios();
@@ -69,10 +84,18 @@ public class AppController {
         }*/
     }
     
-    public void mostrarVentanaAñadirUsuario(){
+    public void mostrarVentanaAñadirUsuario(GestionUsuarios gestionUsuarios){
         añadirUsuario.setVisible(true);
+        gestionUsuarios.setVisible(false);
     }
-    
+    public void datosUsurios(){
+        Usuario usuario = new Usuario();
+
+        // Llamar al método obtenerUsuarios
+        List<Usuario> usuarios = usuario.obtenerUsuarios();
+        GestionUsuarios gestionUsuarios = new GestionUsuarios();
+        gestionUsuarios.cargarUsuariosEnTabla(usuarios);
+    }
     public void añadirUsuario(String nombre, String apellido, String dni, String email, String telef, String socio, Date fecha){
         
         Usuario usuario = new Usuario();

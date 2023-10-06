@@ -4,7 +4,12 @@ import com.mycompany.mavenproject1.controllers.AppController;
 import javax.swing.JFrame;
 
 public class PaginaPrincipalAdmin extends javax.swing.JFrame {
+    private AppController appController;
 
+    public void setAppController(AppController appController) {
+        this.appController = appController;
+    }
+    
     public PaginaPrincipalAdmin() {
         initComponents();
         setTitle("Pagina principal admin");
@@ -128,17 +133,17 @@ public class PaginaPrincipalAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bGestionPistasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGestionPistasActionPerformed
-        GestionPistas gestionPistas = new GestionPistas();
+        /*GestionPistas gestionPistas = new GestionPistas();
         gestionPistas.setVisible(true);
         
         PaginaPrincipalAdmin paginaPrincipal = new PaginaPrincipalAdmin();
-        paginaPrincipal.setVisible(false);
+        paginaPrincipal.setVisible(false);*/
     }//GEN-LAST:event_bGestionPistasActionPerformed
 
     private void btnGestionarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionarUsuariosActionPerformed
         // Boton de gestionar usuarios:
         AppController appController = new AppController();
-        appController.mostrarUsuarios();
+        appController.mostrarUsuarios(this);
     }//GEN-LAST:event_btnGestionarUsuariosActionPerformed
 
     private void cerrarSesion() {

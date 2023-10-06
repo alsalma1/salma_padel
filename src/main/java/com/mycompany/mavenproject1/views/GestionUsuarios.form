@@ -29,24 +29,29 @@
               <Component id="jScrollPane1" min="-2" pref="985" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
           </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="33" pref="806" max="32767" attributes="0"/>
-              <Component id="btnAñadirUsuario" min="-2" pref="106" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="197" max="-2" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Component id="addIcon" min="-2" pref="48" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="returnIcon" min="-2" pref="56" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="334" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-              <Component id="btnAñadirUsuario" min="-2" pref="41" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Component id="returnIcon" pref="52" max="32767" attributes="0"/>
+                  <Component id="addIcon" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="labelUsuarios" min="-2" pref="78" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="161" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="18" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -144,12 +149,24 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="btnA&#xf1;adirUsuario">
+    <Component class="javax.swing.JLabel" name="returnIcon">
       <Properties>
-        <Property name="text" type="java.lang.String" value="A&#xf1;adir"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="2" name="C:\Users\User\Desktop\salma_padel-main\src\main\java\com\mycompany\mavenproject1\views\pics\returnIcon.png"/>
+        </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnA&#xf1;adirUsuarioActionPerformed"/>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="returnIconMouseEntered"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="addIcon">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="2" name="C:\Users\User\Desktop\salma_padel-main\src\main\java\com\mycompany\mavenproject1\views\pics\plusIcon.png"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="addIconMouseEntered"/>
       </Events>
     </Component>
   </SubComponents>

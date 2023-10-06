@@ -67,6 +67,11 @@
               </Group>
               <EmptySpace min="-2" pref="203" max="-2" attributes="0"/>
           </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+              <Component id="returnIcon" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -109,7 +114,9 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnAñadir" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="107" max="32767" attributes="0"/>
+              <EmptySpace pref="7" max="32767" attributes="0"/>
+              <Component id="returnIcon" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -199,6 +206,16 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="Calendar calendar = Calendar.getInstance();&#xa;Date fechaActual = calendar.getTime();&#xa;&#xa;// Establecer la fecha actual como el l&#xed;mite m&#xe1;ximo para la selecci&#xf3;n&#xa;fieldFecha.setMaxSelectableDate(fechaActual);"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="returnIcon">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="2" name="C:\Users\User\Desktop\salma_padel-main\src\main\java\com\mycompany\mavenproject1\views\pics\returnIcon.png"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="returnIconMouseEntered"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
