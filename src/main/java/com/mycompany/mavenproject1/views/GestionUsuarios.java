@@ -20,7 +20,8 @@ public class GestionUsuarios extends javax.swing.JFrame {
     public GestionUsuarios() {
         initComponents();
         setTitle("Gestión usuarios");
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
+       // setExtendedState(JFrame.MAXIMIZED_BOTH);
+       setLocationRelativeTo(null);
         
     }
 
@@ -60,14 +61,12 @@ public class GestionUsuarios extends javax.swing.JFrame {
             tableUsuarios.getColumnModel().getColumn(0).setResizable(false);
         }
 
-        returnIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\alami\\OneDrive\\Bureau\\Padel\\src\\main\\java\\com\\mycompany\\mavenproject1\\views\\pics\\returnIcon.png")); // NOI18N
         returnIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 returnIconMouseEntered(evt);
             }
         });
 
-        addIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\alami\\OneDrive\\Bureau\\Padel\\src\\main\\java\\com\\mycompany\\mavenproject1\\views\\pics\\plusIcon.png")); // NOI18N
         addIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 addIconMouseEntered(evt);
@@ -79,10 +78,10 @@ public class GestionUsuarios extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(labelUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 8, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 985, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(110, 110, 110))
+                .addComponent(labelUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(17, 17, 17)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 973, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(addIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -97,11 +96,14 @@ public class GestionUsuarios extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(returnIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
                     .addComponent(addIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(101, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(labelUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pack();
@@ -173,7 +175,7 @@ public class GestionUsuarios extends javax.swing.JFrame {
 
             if (row < tableUsuarios.getRowCount() && column == 8) {
                 String dni = tableUsuarios.getValueAt(row, 6).toString();
-                buttonRendererEdit.buttonEditAction(dni);
+                buttonRendererEdit.buttonEditAction(dni, GestionUsuarios.this);
             } else if (row < tableUsuarios.getRowCount() && column == 9) {
                 String dni = tableUsuarios.getValueAt(row, 6).toString();
                 buttonRendererDelete.buttonDeleteAction(dni);

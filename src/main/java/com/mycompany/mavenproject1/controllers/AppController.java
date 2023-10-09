@@ -11,19 +11,16 @@ import com.mycompany.mavenproject1.views.PaginaPrincipalAdmin;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 public class AppController {
     
     public static PaginaPrincipalAdmin paginaPrincipalAdmin = new PaginaPrincipalAdmin();
     public static AñadirUsuario añadirUsuario = new AñadirUsuario();
-    public static GestionUsuarios gestionUsuarios = new GestionUsuarios();
+    public static GestionUsuarios gestionUsuarios;
     
     private String datos = "";
 
@@ -91,7 +88,6 @@ public class AppController {
     }
     public void datosUsurios(){
         Usuario usuario = new Usuario();
-
         // Llamar al método obtenerUsuarios
         List<Usuario> usuarios = usuario.obtenerUsuarios();
         GestionUsuarios gestionUsuarios = new GestionUsuarios();
@@ -136,7 +132,7 @@ public class AppController {
         usuario.setContrasena(contraseña);
         
         if(usuario.existeUsuario()){
-            JOptionPane.showMessageDialog(null, "Este email o Dni ya estan registrados en sistema, intenta otra vez!");
+            JOptionPane.showMessageDialog(null, "Este email o Dni ya estan registrados en el sistema, intenta otra vez!");
         }
         else{
             usuario.insertarUsuario();
@@ -159,7 +155,7 @@ public class AppController {
         return randomString.toString();
     }
     
-    public void mostrarDatosUsuario(String dni){
+    public void mostrarDatosUsuario(String dni, GestionUsuarios gestionUsuarios){
         Usuario usuario = new Usuario();
         EditarUsuario editUser = new EditarUsuario();
         usuario.setDni(dni);
@@ -182,10 +178,11 @@ public class AppController {
             }
         }
         editUser.setContraseña(contraseña);
+        gestionUsuarios.setVisible(false);
         editUser.setVisible(true);
     }
     
-    public void editarUsuario(String nombre, String apellido, String dni, String email, String telef, String socio, Date fecha, String contraseña){
+    public void editarUsuario(String nombre, String apellido, String dni, String email, String telef, String socio, Date fecha, String contraseña, EditarUsuario editarUsuario){
         Usuario user = new Usuario();
         user.setNombre(nombre);
         user.setApellido(apellido);
@@ -202,9 +199,37 @@ public class AppController {
         } else {
             user.setSocio(Boolean.FALSE);
         }
-        user.editarUsuario();
+        
+        try {
+            // Intenta editar el usuario
+            user.editarUsuario();
+            JOptionPane.showMessageDialog(null, "Usuario modificado correctamente!");
+            editarUsuario.setVisible(false);
+            // Actualiza y muestra la ventana de gestión de usuarios
+            actualizarYMostrarUsuarios();
+        } catch (Exception e) {
+            // Si hay un error, muestra un mensaje de error
+            JOptionPane.showMessageDialog(null, "Error al editar el usuario: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
+    public void actualizarYMostrarUsuarios(){
+        Usuario usuario = new Usuario();
+
+        // Llamar al método obtenerUsuarios para obtener los datos actualizados
+        List<Usuario> usuarios = usuario.obtenerUsuarios();
+
+        // Cerrar la ventana anterior de GestionUsuarios si está abierta
+        if (gestionUsuarios != null && gestionUsuarios.isVisible()) {
+            gestionUsuarios.dispose();
+        }
+
+        gestionUsuarios = new GestionUsuarios();  // Crear una nueva instancia
+        gestionUsuarios.cargarUsuariosEnTabla(usuarios);
+
+        // Mostrar la ventana de GestionUsuarios
+        gestionUsuarios.setVisible(true);
+    }
     public void desactivarUsuario(String dni){
         Usuario user = new Usuario();
         user.setDni(dni);

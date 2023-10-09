@@ -18,12 +18,12 @@ class ButtonRenderer extends DefaultTableCellRenderer {
         buttonDelete.setBackground(Color.decode("#E32525"));
     }
 
-    public void buttonEditAction(String dni) {
+    public void buttonEditAction(String dni, GestionUsuarios gestionarUsuarios) {
         // Verificar si la acción ya se ejecutó para no cada vez que se clica en el boton llamar al metodo mostrarDatosUusario
         if (!editActionExecuted) {
             // Acción específica para el botón
             AppController appController = new AppController();
-            appController.mostrarDatosUsuario(dni);
+            appController.mostrarDatosUsuario(dni, gestionarUsuarios);
             editActionExecuted = true;  // Marcar que la acción se ejecutó
         }
     }

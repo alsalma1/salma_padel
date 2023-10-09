@@ -313,8 +313,6 @@ public class Usuario {
             
             // Ejecutar la consulta de inserción
             preparedStatement.executeUpdate();
-            JOptionPane.showMessageDialog(null,"Usuario modificado correctamente!");
-            
             
         } catch (SQLException e) {
             e.printStackTrace(); // Manejo de errores: imprime el error en la consola

@@ -13,6 +13,8 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         setTitle("Inicio de sesión");
+        // Centrar la ventana en la pantalla
+        setLocationRelativeTo(null);
         //setExtendedState(JFrame.MAXIMIZED_BOTH);
         //this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
