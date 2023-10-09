@@ -98,51 +98,6 @@ public class Usuario {
     
     //Metododos
 
-    /*public Object[] obtenerUsuarios() {
-        // Definir una lista para almacenar los resultados
-        List<Object[]> usuariosList = new ArrayList<>();
-
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {            
-            // Establecer conexión a la base de datos
-            Conexion conn = new Conexion();
-            connection = conn.establecerConexion();
-
-            // Consulta SQL para obtener usuarios
-            String sqlQuery = "SELECT * FROM usuarios";
-            preparedStatement = connection.prepareStatement(sqlQuery);
-            resultSet = preparedStatement.executeQuery();
-
-            // Obtener el numero de columnas
-            int columnCount = resultSet.getMetaData().getColumnCount();
-
-            // Recorrer el resultado y almacenar los datos de cada usuario en un array de objetos
-            while (resultSet.next()) {
-                Object[] usuarioData = new Object[columnCount];
-                for (int i = 1; i <= columnCount; i++) {
-                    usuarioData[i - 1] = resultSet.getObject(i);
-                }
-                usuariosList.add(usuarioData);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace(); // Manejo de errores: imprime el error en la consola
-        } finally {
-            // Cerrar recursos
-            try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace(); // Manejo de errores: imprime el error en la consola
-            }
-        }
-
-        // Convertir la lista de usuarios a un array de objetos
-        return usuariosList.toArray();
-    }*/
     public List<Usuario> obtenerUsuarios() {
         List<Usuario> usuarios = new ArrayList<>();
         Connection connection = null;
@@ -155,7 +110,7 @@ public class Usuario {
             connection = conn.establecerConexion();
 
             // Crear la consulta SQL
-            String sql = "SELECT * FROM usuarios";
+            String sql = "SELECT * FROM usuarios WHERE activado = 1";
 
             // Crear el statement
             statement = connection.createStatement();
@@ -174,8 +129,6 @@ public class Usuario {
                 usuario.setTelefono(resultSet.getString("telefono"));
                 usuario.setDni(resultSet.getString("dni"));
                 usuario.setSocio(resultSet.getBoolean("socio"));
-                // Agregar más campos según la estructura de tu tabla
-                // ...
 
                 usuarios.add(usuario);
             }
@@ -284,4 +237,127 @@ public class Usuario {
             }
         }
     }
+
+    public List<Usuario> datosUsuarioConDni() {
+        List<Usuario> usuarios = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // Establecer conexión a la base de datos
+            Conexion conn = new Conexion();
+            connection = conn.establecerConexion();
+
+            // Crear la consulta SQL con un PreparedStatement y parámetros
+            String sql = "SELECT * FROM usuarios WHERE dni = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, getDni());
+
+            // Ejecutar la consulta
+            resultSet = preparedStatement.executeQuery();
+
+            // Iterar sobre los resultados y crear objetos Usuario
+            while (resultSet.next()) {
+                this.setNombre(resultSet.getString("nombre"));
+                this.setApellido(resultSet.getString("apellido"));
+                this.setEmail(resultSet.getString("email"));
+                this.setContrasena(resultSet.getString("contraseña"));
+                this.setFecha_nacimiento(resultSet.getDate("fecha_nacimiento"));
+                this.setTelefono(resultSet.getString("telefono"));
+                this.setDni(resultSet.getString("dni"));
+                this.setSocio(resultSet.getBoolean("socio"));
+
+                usuarios.add(this);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // Manejo de errores: imprime el error en la consola
+        } finally {
+            // Cerrar recursos
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace(); // Manejo de errores: imprime el error en la consola
+            }
+        }
+        return usuarios;
+    }
+    
+    public void editarUsuario(){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {            
+            // Establecer conexión a la base de datos
+            Conexion conn = new Conexion();
+            connection = conn.establecerConexion();
+
+            // Consulta SQL para obtener usuarios
+            String sql = "UPDATE usuarios SET nombre = ?, apellido = ?, email = ?, foto = ?, fecha_nacimiento = ?, telefono = ?, socio = ?, contraseña=? WHERE dni = ?";
+            preparedStatement = connection.prepareStatement(sql);
+
+            // Establecer los valores para los parámetros
+            preparedStatement.setString(1, getNombre());
+            preparedStatement.setString(2, getApellido());
+            preparedStatement.setString(3, getEmail());
+            preparedStatement.setString(4, "De momento no hay");
+            preparedStatement.setDate(5,  getFecha_nacimiento());
+            preparedStatement.setString(6, getTelefono());
+            preparedStatement.setBoolean(7, getSocio());
+            preparedStatement.setString(8, getContrasena());
+            preparedStatement.setString(9, getDni());
+            
+            // Ejecutar la consulta de inserción
+            preparedStatement.executeUpdate();
+            JOptionPane.showMessageDialog(null,"Usuario modificado correctamente!");
+            
+            
+        } catch (SQLException e) {
+            e.printStackTrace(); // Manejo de errores: imprime el error en la consola
+        } finally {
+            // Cerrar recursos
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace(); // Manejo de errores: imprime el error en la consola
+            }
+        }
+    }
+    
+    public void desactivar(){
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            // Establecer conexión a la base de datos
+            Conexion conn = new Conexion();
+            connection = conn.establecerConexion();
+
+            // Crear la consulta SQL con un PreparedStatement y parámetros
+            String sql = "UPDATE usuarios SET activado = 0 WHERE dni = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, getDni());
+
+            // Ejecutar la consulta
+            int resultSet = preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Cerrar recursos
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
 }

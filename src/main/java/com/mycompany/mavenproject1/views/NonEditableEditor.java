@@ -1,4 +1,3 @@
-
 package com.mycompany.mavenproject1.views;
 
 import javax.swing.DefaultCellEditor;

@@ -6,9 +6,7 @@ import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
@@ -62,14 +60,14 @@ public class GestionUsuarios extends javax.swing.JFrame {
             tableUsuarios.getColumnModel().getColumn(0).setResizable(false);
         }
 
-        returnIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Desktop\\salma_padel-main\\src\\main\\java\\com\\mycompany\\mavenproject1\\views\\pics\\returnIcon.png")); // NOI18N
+        returnIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\alami\\OneDrive\\Bureau\\Padel\\src\\main\\java\\com\\mycompany\\mavenproject1\\views\\pics\\returnIcon.png")); // NOI18N
         returnIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 returnIconMouseEntered(evt);
             }
         });
 
-        addIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Desktop\\salma_padel-main\\src\\main\\java\\com\\mycompany\\mavenproject1\\views\\pics\\plusIcon.png")); // NOI18N
+        addIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\alami\\OneDrive\\Bureau\\Padel\\src\\main\\java\\com\\mycompany\\mavenproject1\\views\\pics\\plusIcon.png")); // NOI18N
         addIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 addIconMouseEntered(evt);
@@ -81,12 +79,12 @@ public class GestionUsuarios extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(labelUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                .addComponent(labelUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 8, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 985, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+                .addGap(110, 110, 110))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(addIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(returnIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -102,8 +100,8 @@ public class GestionUsuarios extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
 
         pack();
@@ -141,15 +139,14 @@ public class GestionUsuarios extends javax.swing.JFrame {
     public void cargarUsuariosEnTabla(List<Usuario> usuarios) {
         DefaultTableModel model = (DefaultTableModel) tableUsuarios.getModel();
         model.setRowCount(0); // Limpiar la tabla antes de cargar los datos
-        
-          // Agrega el renderizador para la columna "Editar"
-        tableUsuarios.getColumnModel().getColumn(8).setCellRenderer(new ButtonRenderer());
+      
+        ButtonRenderer buttonRendererEdit = new ButtonRenderer();
+        ButtonRenderer buttonRendererDelete = new ButtonRenderer();
+
+        tableUsuarios.getColumnModel().getColumn(8).setCellRenderer(buttonRendererEdit);
+        tableUsuarios.getColumnModel().getColumn(9).setCellRenderer(buttonRendererDelete);
         tableUsuarios.getColumnModel().getColumn(8).setCellEditor(new NonEditableEditor(new JTextField()));
-        //tableUsuarios.getColumnModel().getColumn(8).setCellEditor(new ButtonEditor(tableUsuarios, model));
-        //tableUsuarios.getColumnModel().getColumn(8).setCellEditor(new ButtonEditor());
-
-        //tableUsuarios.getColumnModel().getColumn(8).setCellEditor(new ButtonEditor(tableUsuarios));
-
+        
         for (Usuario usuario : usuarios) {
             String esSocio = usuario.getSocio() ? "Sí" : "No";
             Object[] row = {
@@ -161,10 +158,28 @@ public class GestionUsuarios extends javax.swing.JFrame {
                     usuario.getTelefono(),
                     usuario.getDni(),
                     esSocio,
-                    "Editar"
+                    "Editar",
+                    "Eliminar"
             };
             model.addRow(row);
         }
+        tableUsuarios.setRowHeight(40);
+        // Asignar MouseListener al botón para manejar el clic
+        tableUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            int column = tableUsuarios.getColumnModel().getColumnIndexAtX(evt.getX());
+            int row = evt.getY() / tableUsuarios.getRowHeight();
+
+            if (row < tableUsuarios.getRowCount() && column == 8) {
+                String dni = tableUsuarios.getValueAt(row, 6).toString();
+                buttonRendererEdit.buttonEditAction(dni);
+            } else if (row < tableUsuarios.getRowCount() && column == 9) {
+                String dni = tableUsuarios.getValueAt(row, 6).toString();
+                buttonRendererDelete.buttonDeleteAction(dni);
+            }
+        }
+        });       
     }
 
 

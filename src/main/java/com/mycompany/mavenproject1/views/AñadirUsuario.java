@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class AñadirUsuario extends javax.swing.JFrame {
 
@@ -91,7 +92,7 @@ public class AñadirUsuario extends javax.swing.JFrame {
 
         fieldFecha.setDateFormatString("yyyy-MM-dd");
 
-        returnIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Desktop\\salma_padel-main\\src\\main\\java\\com\\mycompany\\mavenproject1\\views\\pics\\returnIcon.png")); // NOI18N
+        returnIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\alami\\OneDrive\\Bureau\\Padel\\src\\main\\java\\com\\mycompany\\mavenproject1\\views\\pics\\returnIcon.png")); // NOI18N
         returnIcon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 returnIconMouseEntered(evt);
@@ -102,12 +103,8 @@ public class AñadirUsuario extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(202, 202, 202)
-                .addComponent(btnAñadir)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(76, Short.MAX_VALUE)
+                .addContainerGap(82, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,8 +133,10 @@ public class AñadirUsuario extends javax.swing.JFrame {
                                 .addComponent(fieldDni, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(203, 203, 203))
             .addGroup(layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(returnIcon)
+                .addGap(27, 27, 27)
+                .addComponent(returnIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(89, 89, 89)
+                .addComponent(btnAñadir)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -171,11 +170,15 @@ public class AñadirUsuario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(boxSocio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(btnAñadir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                .addComponent(returnIcon)
-                .addGap(52, 52, 52))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                        .addComponent(returnIcon)
+                        .addGap(30, 30, 30))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(btnAñadir)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         Calendar calendar = Calendar.getInstance();
@@ -199,6 +202,7 @@ public class AñadirUsuario extends javax.swing.JFrame {
         //El boton para añadir el usuario
         String nombre, apellido, dni, email, telef, socio;
         Date fecha;
+        
         nombre = fieldNombre.getText();
         apellido = fieldApellido.getText();
         dni = fieldDni.getText();
@@ -206,10 +210,17 @@ public class AñadirUsuario extends javax.swing.JFrame {
         telef = fieldTelefono.getText();
         socio = boxSocio.getSelectedItem().toString();
         fecha = fieldFecha.getDate();
-        
-        AppController appController = new AppController();
-        appController.añadirUsuario(nombre, apellido, dni, email, telef, socio, fecha);
 
+            // Verificar que los campos no estén vacíos
+        if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty() || email.isEmpty() ||
+                telef.isEmpty() || socio.isEmpty() || fecha == null) {
+            // Mostrar un mensaje indicando que todos los campos deben estar llenos
+            JOptionPane.showMessageDialog(this, "Todos los campos deben estar llenos", "Campos Vacíos", JOptionPane.WARNING_MESSAGE);
+        } else {
+            // Llamar a la función para añadir el usuario solo si todos los campos están llenos
+            AppController appController = new AppController();
+            appController.añadirUsuario(nombre, apellido, dni, email, telef, socio, fecha);
+        }
     }//GEN-LAST:event_btnAñadirActionPerformed
 
     private void fieldTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldTelefonoActionPerformed
@@ -233,6 +244,7 @@ public class AñadirUsuario extends javax.swing.JFrame {
         returnIcon.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                dispose();
                 int num = 0;
                 // Lógica para manejar el evento de clic en el icono
                 setVisible(false);
